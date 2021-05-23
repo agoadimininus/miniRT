@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 12:09:13 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/04/15 15:49:30 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/05/21 21:47:56 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ t_ray	ray_for_pixel(t_camera camera, double px, double py)
 	return (c_ray(c.origin, c.direction));
 }
 
+int fronteira = 0;
+
 t_canvas	render(t_camera camera, t_world world)
 {
 	t_canvas	image;
@@ -77,6 +79,8 @@ t_canvas	render(t_camera camera, t_world world)
 		x = 0;
 		while (x < camera.hsize)
 		{
+			world.vec.y = y;
+			world.vec.x = x;
 			ray = ray_for_pixel(camera, x, y);
 			color = color_at(world, ray);
 			image = write_pixel(image, x, y, color);

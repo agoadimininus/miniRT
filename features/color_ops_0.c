@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/27 11:50:25 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/05/11 19:04:17 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/05/22 17:32:44 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,8 @@ t_color	mul_color(t_color a, t_color b)
 {
 	t_color		tmp;
 
-	tmp.r = ((a.r * 100) * (b.r * 100)) / 10000;
-	tmp.g = ((a.g * 100) * (b.g * 100)) / 10000;
-	tmp.b = ((a.b * 100) * (b.b * 100)) / 10000;
-//	tmp.g = a.g * b.g;
-//	tmp.b = a.b * b.b;
+	tmp.r = a.r * b.r;
+	tmp.g = a.g * b.g;
+	tmp.b = a.b * b.b;
 	return (tmp);
 }

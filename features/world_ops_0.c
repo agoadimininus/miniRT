@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:09:30 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/05/11 18:52:51 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/05/23 10:14:30 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ t_shade_comps	prepare_shade_computations(t_node_inter *inter, t_ray ray)
 	}
 	else
 		comps.inside = FALSE;
+	comps.over_point = scal_mul_pos_w(comps.normalv, EPSILON);
+	comps.over_point = add_pos_w(comps.over_point, comps.point);
 	return (comps);
 }
 
@@ -93,12 +95,15 @@ t_color	shade_hit(t_world world, t_shade_comps comps)
 {
 	t_color	final_color;
 	size_t	i;
+	int		shadowed;
 
-	final_color = lightning(comps.object->material, world.lights[0], comps.point, comps.eyev, comps.normalv);
- 	i = 2;
-	while (i <= world.light_count)
+	shadowed = is_shadowed(world, comps.over_point, 0);
+	final_color = lightning(comps.object->material, world.lights[0], comps.over_point, comps.eyev, comps.normalv, shadowed);
+	i = 1;
+	while (i < world.light_count)
 	{
-		final_color = add_color(final_color, lightning(comps.object->material, world.lights[i], comps.point, comps.eyev, comps.normalv));
+		shadowed = is_shadowed(world, comps.over_point, i);
+		final_color = add_color(final_color, lightning(comps.object->material, world.lights[i], comps.over_point, comps.eyev, comps.normalv, shadowed));
 		i++;
 	}
 	return (final_color);

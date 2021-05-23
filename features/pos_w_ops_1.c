@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 16:00:20 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/04/08 19:20:18 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/05/22 17:33:34 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,5 @@ double	dot_pos_w(t_pos_w a, t_pos_w b)
 
 double	mag_pos_w(t_pos_w a)
 {
-	return (sqrt((a.x * a.x) + (a.y * a.y) + (a.z * a.z) + (a.w * a.w)));
+	return (sqrt((a.x * a.x) + (a.y * a.y) + (a.z * a.z)));
 }

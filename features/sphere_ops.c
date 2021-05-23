@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:28:49 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/04/16 14:45:02 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/05/22 17:34:15 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,27 +81,9 @@ t_pos_w	normal_at(t_object object, t_pos_w world_point)
 	object_point = mult_matrix_pos_w(invert, world_point);
 	object_normal = sub_pos_w(object_point, c_point(0, 0, 0));
 	world_normal = mult_matrix_pos_w(transpose, object_normal);
-	world_normal = norm_pos_w(world_normal);
 	world_normal.w = 0;
+	world_normal = norm_pos_w(world_normal);
 	free_matrix(invert);
 	free_matrix(transpose);
 	return (world_normal);
 }
-
-
-/* int main()
-{
-	t_object	s;
-	t_pos_w		n;
-
-	s = c_sphere();
-	s = setf_transform(s, translation(0, 1, 0));
-	n = normal_at_sph(s, c_point(0, 1.70711, -0.70711));
-	print_matrix(s.transform);
-	printf("(%f, %f, %f, %d)\n", n.x, n.y, n.z, n.w);
-	if (equal_pos_w(n, c_vector(0, 0.70711, -0.70711)))
-		printf("OK\n");
-	free_matrix(s.transform);
-	free(s.material);
-}
- */

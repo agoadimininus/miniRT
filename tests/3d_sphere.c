@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 21:26:27 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/05/11 18:51:18 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/05/21 20:11:04 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int main (void)
 	canvas2 = c_canvas(canvas_pixel, canvas_pixel);
 	shape = c_sphere();
 	shape = setf_transform(shape, translation(-1.5 , 0.5, -0.5));
+//	print_matrix(shape.transform);
 //	shape.transform = mult_free(shape.transform, scaling(1, 2, 1));
 	shape.material->color = c_color(1, 1, 1);
 	light2 = c_light(c_point(10, 10, -10), c_color(1, 0.2, 0.2));
@@ -93,8 +94,8 @@ int main (void)
 		y++;
 	}
 	free_matrix(shape.transform);
-	//create_ppm("3d_sphere_test_color1_trans", canvas1);
+	create_ppm("novos_testes_1", canvas1);
 	free_canvas(canvas1);
-	create_ppm("3d_sphere_test_color2_trans", canvas2);
+	create_ppm("novos_testes_2", canvas2);
 	free_canvas(canvas2);
 }

@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 15:51:44 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/05/11 18:52:00 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/05/22 19:02:33 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct s_world
 	size_t				light_count;
 	t_object			*objects;
 	size_t				objects_count;
+	t_pos_w				vec;
 }						t_world;
 
 typedef struct s_raypx_comps
@@ -127,6 +128,7 @@ typedef struct s_shade_comps
 	t_pos_w		normalv;
 	double		t;
 	int			inside;
+	t_pos_w		over_point;
 }						t_shade_comps;
 
 typedef struct s_vtrans
@@ -195,8 +197,9 @@ t_material		*init_material(t_material *material);
 ** Lights operations 0.
 */
 t_light			c_light(t_pos_w	position, t_color color);
-t_color			lightning(t_material *material, t_light light, t_pos_w position, t_pos_w eyev, t_pos_w normalv);
-
+t_color			lightning(t_material *material, t_light light, t_pos_w point, t_pos_w eyev, t_pos_w normalv, int in_shadow);
+t_node_inter	*inter_shadow(t_world world, t_pos_w point, t_pos_w direction);
+int				is_shadowed(t_world world, t_pos_w point, size_t i);
 
 /*
 ** Invert matrix operations.

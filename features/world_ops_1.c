@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 14:09:30 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/04/15 17:03:46 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/05/21 19:01:33 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ t_color	color_at(t_world world, t_ray ray)
 	head = intersect_world(world, ray);
 	hit_node = hit(head);
 	if (hit_node == NULL)
+		color = c_color(0, 0, 0);
+	else
 	{
-		free_intersection_list(head);
-		return (c_color(0, 0, 0));
+		comps = prepare_shade_computations(hit_node, ray);
+		color = shade_hit(world, comps);
 	}
-	comps = prepare_shade_computations(hit_node, ray);
-	color = shade_hit(world, comps);
 	free_intersection_list(head);
 	return (color);
 }

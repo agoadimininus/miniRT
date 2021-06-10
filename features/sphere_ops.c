@@ -6,7 +6,7 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 12:28:49 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/05/22 17:34:15 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/05/23 14:39:04 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ t_object	c_sphere(void)
 {
 	t_object	s;
 
-	s.center = c_point(0, 0, 0);
-	s.size = 1;
+	s.sphere.center = c_point(0, 0, 0);
+	s.sphere.size = 1;
 	s.transform = c_id_matrix(4);
 	s.material = init_material(s.material);
 	return (s);
@@ -28,7 +28,7 @@ static t_disc	intersect_sph_disc(t_object *s, t_ray ray)
 	t_pos_w		sphere_to_ray;
 	t_disc		disc;
 
-	sphere_to_ray = sub_pos_w(ray.origin, s->center);
+	sphere_to_ray = sub_pos_w(ray.origin, s->sphere.center);
 	disc.a = dot_pos_w(ray.direction, ray.direction);
 	disc.b = 2 * dot_pos_w(ray.direction, sphere_to_ray);
 	disc.c = dot_pos_w(sphere_to_ray, sphere_to_ray) - 1;

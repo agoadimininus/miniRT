@@ -6,9 +6,12 @@
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 15:51:44 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/05/22 19:02:33 by cfico-vi         ###   ########.fr       */
+/*   Updated: 2021/05/23 23:31:06 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+//! retirar ambient de t_material
+//! implementar várias luzes e luz ambiente
 
 #ifndef RAYTRACER_H
 # define RAYTRACER_H
@@ -25,6 +28,12 @@
 # define EPSILON		0.00001
 # define TRUE			1
 # define FALSE			0
+
+# define SPHERE			10
+# define PLANE			11
+# define SQUARE			12
+# define CYLINDER		13
+# define TRIANGLE		14
 
 typedef struct s_pos_w
 {
@@ -70,10 +79,40 @@ typedef struct s_ray
 	t_pos_w				direction;
 }						t_ray;
 
-typedef struct s_object
+typedef struct s_sphere
 {
 	double				size;
 	t_pos_w				center;
+}						t_sphere;
+
+/* typedef struct s_plane
+{
+
+}						t_plane; */
+
+/* typedef struct s_square
+{
+
+}						t_square; */
+
+/* typedef struct s_cylinder
+{
+
+}						t_cylinder; */
+
+/* typedef struct s_triangle
+{
+
+}						t_triangle; */
+
+typedef struct s_object
+{
+	int					shape;
+	t_sphere			sphere;
+//	t_plane				plane;
+//	t_square			square;
+//	t_cylinder			cylinder;
+//	t_triangle			triangle;
 	t_matrix			transform;
 	t_material			*material;
 }						t_object;
@@ -102,6 +141,7 @@ typedef struct s_light
 
 typedef struct s_world
 {
+	t_light				ambient;
 	t_light				*lights;
 	size_t				light_count;
 	t_object			*objects;
@@ -122,31 +162,31 @@ typedef struct s_raypx_comps
 
 typedef struct s_shade_comps
 {
-	t_object	*object;
-	t_pos_w		point;
-	t_pos_w		eyev;
-	t_pos_w		normalv;
-	double		t;
-	int			inside;
-	t_pos_w		over_point;
+	t_object			*object;
+	t_pos_w				point;
+	t_pos_w				eyev;
+	t_pos_w				normalv;
+	double				t;
+	int					inside;
+	t_pos_w				over_point;
 }						t_shade_comps;
 
 typedef struct s_vtrans
 {
-	t_pos_w		forward;
-	t_pos_w		left;
-	t_pos_w		true_up;
+	t_pos_w				forward;
+	t_pos_w				left;
+	t_pos_w				true_up;
 }						t_vtrans;
 
 typedef struct s_camera
 {
-	double		hsize;
-	double		vsize;
-	double		fov;
-	double		pixel_size;
-	double		half_width;
-	double		half_height;
-	t_matrix	transform;
+	double				hsize;
+	double				vsize;
+	double				fov;
+	double				pixel_size;
+	double				half_width;
+	double				half_height;
+	t_matrix			transform;
 }						t_camera;
 
 /*
@@ -197,7 +237,8 @@ t_material		*init_material(t_material *material);
 ** Lights operations 0.
 */
 t_light			c_light(t_pos_w	position, t_color color);
-t_color			lightning(t_material *material, t_light light, t_pos_w point, t_pos_w eyev, t_pos_w normalv, int in_shadow);
+t_color			lightning(t_material *material, t_light light, t_pos_w point,
+	t_pos_w eyev, t_pos_w normalv, int in_shadow);
 t_node_inter	*inter_shadow(t_world world, t_pos_w point, t_pos_w direction);
 int				is_shadowed(t_world world, t_pos_w point, size_t i);
 
@@ -239,7 +280,8 @@ t_matrix		rotation_z(double rad);
 /*
 ** Matrix transformation operations 1.
 */
-t_camera		view_transform(t_camera c, t_pos_w from, t_pos_w to, t_pos_w up);
+t_camera		view_transform(t_camera c,
+				t_pos_w from, t_pos_w to, t_pos_w up);
 
 /*
 ** Objects operations 0.
@@ -301,16 +343,18 @@ t_ray			transform(t_ray ray, t_matrix matrix);
 t_object		set_transform(t_object obj, t_matrix matrix);
 
 /*
-** Rays operations 1 X.
+** Rays operations 2 X.
 */
 t_object		setf_transform(t_object obj, t_matrix trans_matrix);
+t_node_inter	*local_intersect(t_node_inter *head, t_object *s, t_ray ray);
+t_node_inter	*intersect(t_node_inter *head, t_object *s, t_ray ray);
+t_pos_w			normal_at(t_object object, t_pos_w world_point);
 
 /*
 ** Sphere operations X.
 */
 t_object		c_sphere(void);
 t_node_inter	*intersect_sph(t_node_inter *head, t_object *s, t_ray ray);
-t_pos_w			normal_at(t_object object, t_pos_w world_point);
 
 /*
 ** World operations 0.

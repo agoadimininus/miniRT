@@ -56,7 +56,7 @@ int	main(void)
 	camera = c_camera(500, 250, M_PI / 3);
 	camera = view_transform(camera, c_point(0, 1.5, -5), c_point(0, 1, 0), c_vector(0, 1, 0));
 	canvas = render(camera, world);
-	create_ppm("making_scene_shadow", canvas);
+	create_ppm("test_shadow", canvas);
 	free_matrix(camera.transform);
 	free_canvas(canvas);
 	free_world(world);

@@ -1,0 +1,21 @@
+001 >> You didn't put any arguments... Trying put at least a valid ".rt" value for us to start.
+002 >> You put too many arguments here... The arguments avaliable are, in this order, a valid ".rt" file and a "--save" flag, if you want to save the rendered images as bitmap instead of open the window.
+003 >> This was not a valid ".rt" file... Make sure the argument ends with ".rt"
+004 >> This was not a valid flag, the only avaliable is "--save"
+005 >> We found some weird elements identifier in your ".rt" file. MiniRT can handle 'R', 'A', 'c', 'l', 'sp', 'pl', 'sq', 'cy'.
+006 >> The program couldn't handle your ".rt" file, and we aren't sure why, sorry. Please, get in contact if you can.
+
+010 >> You have more than 1 element of it type in your ".rt" file
+011 >> There is a wrong number of information for this kind of element, please check if there is no misplaced ' '.
+012 >> We found some weird characters through this element line, please check your spelling
+013 >> There is a not a well passed "width" parameter, it must be a positive int number. Please check your ".rt" file.
+014 >> There is a not a well passed "height" parameter, it must be a positive int number. Please check your ".rt" file.
+015 >> There is a not a well passed "ratio" parameter. This parameter must be a float [0.0,1.0]. Please check your ".rt" file.
+016 >> There is a not a well passed "rgb" parameter. This parameter must have three [0,255] numbers, separated by ','. Please check your ".rt" file.
+017 >> There is a not a well passed "x,y,z coordenates" parameter. This parameter must have three positive numbers, separated by ','. Please check your ".rt" file.
+018 >> There is a not a well passed "normalized vector" parameter. This parameter must have three positive numbers, separated by ',', and its magnitude must be 1. Please check your ".rt" file.
+019 >> There is a not a well passed "fov" parameter. This parameter must be an int [0,180]. Please check your ".rt" file.
+020 >> There is a not a well passed "diameter" parameter, it must be a positive float number. Please check your ".rt" file.
+021 >> There is a not a well passed "size" parameter, it must be a positive float number. Please check your ".rt" file.
+022 >> There is a not a well passed "height" parameter, it must be a positive float number. Please check your ".rt" file.
+023 >> You must have 1 element of its kind in your ".rt" file, please check it.

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raytracer.h                                        :+:      :+:    :+:   */
+/*   raytracer_bonus.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cfico-vi <cfico-vi@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/08 00:16:04 by cfico-vi          #+#    #+#             */
-/*   Updated: 2021/08/08 00:26:28 by cfico-vi         ###   ########.fr       */
+/*   Created: 2021/08/08 00:16:28 by cfico-vi          #+#    #+#             */
+/*   Updated: 2021/08/08 00:16:30 by cfico-vi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAYTRACER_H
-# define RAYTRACER_H
+#ifndef RAYTRACER_BONUS_H
+# define RAYTRACER_BONUS_H
 
 /*
 ** ~*~*~*~*~*~*~*~ HEADERS ~*~*~*~*~*~*~*~
@@ -26,10 +26,10 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdint.h>
-# include "../libraries/libft/libft.h"
-# include "../libraries/minilibx-linux/mlx.h"
-# include "../libraries/minilibx-linux/mlx_int.h"
-# include "structs.h"
+# include "../../libraries/libft/libft.h"
+# include "../../libraries/minilibx-linux/mlx.h"
+# include "../../libraries/minilibx-linux/mlx_int.h"
+# include "structs_bonus.h"
 
 /*
 ** ~*~*~*~*~*~*~*~ MACROS ~*~*~*~*~*~*~*~
@@ -42,14 +42,18 @@
 # define TRUE			1
 # define FALSE			0
 
-# define AMBIENT		0
-# define CAMERA			1
-# define LIGHT			2
-# define SPHERE			3
-# define PLANE			4
-# define CYLINDER		5
+# define RESOLUTION		0
+# define AMBIENT		1
+# define CAMERA			2
+# define LIGHT			3
+# define SPHERE			4
+# define PLANE			5
+# define SQUARE			6
+# define CYLINDER		7
 
 # define ESC			0xff1b
+# define LEFT			0xff51
+# define RIGHT			0xff53
 
 /*
 ** ~*~*~*~*~*~*~*~ FUNCTION PROTOTYPES ~*~*~*~*~*~*~*~
@@ -200,6 +204,8 @@ t_object		c_cylinder(double height);
 /*
 ** Objects operations 3.
 */
+t_node_inter	*intersect_sqr(t_node_inter *head, t_object *s, t_ray ray);
+t_object		c_square(void);
 t_material		*init_material(t_material *material);
 
 /*
@@ -261,6 +267,7 @@ t_object		setf_transform(t_object obj, t_matrix trans_matrix);
 /*
 ** World operations 0.
 */
+t_world			default_world(t_world world);
 void			free_world(t_world world);
 t_node_inter	*intersect_world(t_world world, t_ray ray);
 t_shade_comps	prepare_shade_computations(t_node_inter *inter, t_ray ray);
@@ -295,6 +302,7 @@ void			check_parse_elements(t_parse *parse);
 /*
 ** Parse_ops_2.c
 */
+t_parse			*get_resolution(t_element *element, t_parse *parse);
 t_parse			*get_ambient(t_element *element, t_parse *parse);
 t_parse			*get_camera(t_element *element, t_parse *parse);
 t_parse			*get_light(t_element *element, t_parse *parse);
@@ -305,6 +313,7 @@ void			free_and_close(t_parse *parse);
 */
 t_parse			*get_sphere(t_element *element, t_parse *parse);
 t_parse			*get_plane(t_element *element, t_parse *parse);
+t_parse			*get_square(t_element *element, t_parse *parse);
 t_parse			*get_cylinder(t_element *element, t_parse *parse);
 
 /*
@@ -355,9 +364,16 @@ t_pos_w			get_normv(t_element *element,
 ** /\/\ RENDER /\/\
 */
 /*
+** Bitmaps operation.
+*/
+void			create_bmp(char *str, t_canvas canvas);
+
+/*
 ** MLX operations 0.
 */
 int				close_all(t_rt *rt);
+void			next_cam(t_mlx *vars);
+void			previous_cam(t_mlx *vars);
 int				key_pressed(int keycode, t_rt *rt);
 int				expose_hook(t_mlx *vars);
 
@@ -366,6 +382,7 @@ int				expose_hook(t_mlx *vars);
 */
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
 t_mlx			c_images(t_mlx vars, int img_count, int win_w, int win_h);
+t_mlx			screen_resolution(t_mlx vars);
 t_data			canvas_to_img(t_data img, t_canvas canvas);
 
 /*
@@ -388,6 +405,7 @@ t_rt			create_scene_and_render(t_rt *rt, t_parse *parse);
 t_rt			*push_light(t_rt *rt, t_parse *parse);
 t_rt			*push_sphere(t_rt *rt, t_parse *parse);
 t_rt			*push_plane(t_rt *rt, t_parse *parse);
+t_rt			*push_square(t_rt *rt, t_parse *parse);
 t_rt			*push_cylinder(t_rt *rt, t_parse *parse);
 
 #endif
